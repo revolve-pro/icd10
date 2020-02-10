@@ -1,0 +1,15 @@
+{
+  "name": "icd10",
+  "version": "0.0.1",
+  "description": "Package that gole is to gelp working with ICD Classificantion created by WHO",
+  "scripts": {
+  },
+  "keywords": [
+    "icd",
+    "icd10",
+    "who",
+    "classification"
+  ],
+  "author": "revolve.pro",
+  "license": "MIT",
+}
