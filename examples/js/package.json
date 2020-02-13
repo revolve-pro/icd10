@@ -1,0 +1,18 @@
+{
+  "name": "icd10examples",
+  "version": "1.0.0",
+  "description": "",
+  "main": "moduleTest.js",
+  "scripts": {
+    "start": "node test.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Paweł Dworniczak",
+  "license": "ISC",
+  "dependencies": {
+    "icd10": "github:revolve-pro/icd10#generate_json_on_install"
+  },
+  "icd10": {
+    "xmlPath": "data/icdClaML2016ens.xml"
+  }
+}
