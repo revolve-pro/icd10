@@ -2,7 +2,14 @@
   "name": "icd10",
   "version": "0.0.1",
   "description": "Package that gole is to gelp working with ICD Classificantion created by WHO",
+  "main": "dist/index.js",
   "scripts": {
+    "build": "tsc",
+    "test": "node ./dist/src/test.js",
+    "generateXSD": "perl generators/dtd2xsd.pl data/icdClaML2016ens/ClaML.dtd >> ClaML.xsd",
+    "generateJSON": "node ./dist/generators/xml2jsonFile.js",
+    "prepublish": "tsc",
+    "postinstall": "npm run generateJSON"
   },
   "keywords": [
     "icd",
@@ -12,4 +19,12 @@
   ],
   "author": "revolve.pro",
   "license": "MIT",
+  "dependencies": {
+    "xml2js": "^0.4.23"
+  },
+  "devDependencies": {
+    "@types/node": "^13.7.0",
+    "@types/xml2js": "^0.4.5",
+    "typescript": "^3.7.5"
+  }
 }
