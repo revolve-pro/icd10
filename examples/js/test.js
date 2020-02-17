@@ -12,5 +12,3 @@ icd.getChapterList().map(category => console.log(category));
 console.log(icd.find("X"));
 
 const t = icd.find("X");
-t.type()
-t.getCategoryList()
