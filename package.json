@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Package that gole is to gelp working with ICD Classificantion created by WHO",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "node ./dist/src/test.js",

@@ -6,6 +6,6 @@
     "outDir": "./dist",
     "strict": true
   },
-  "include": ["src", "generators"],
-  "exclude": ["icd10-react-ts"]
+  "include": ["index.ts", "src", "generators"],
+  "exclude": ["examples"]
 }
