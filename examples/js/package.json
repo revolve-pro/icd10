@@ -10,9 +10,9 @@
   "author": "Paweł Dworniczak",
   "license": "ISC",
   "dependencies": {
-    "icd10": "github:revolve-pro/icd10#generate_json_on_install"
+    "icd10": "file:../../icd10-0.0.1.tgz"
   },
   "icd10": {
-    "xmlPath": "data/icdClaML2016ens.xl"
+    "xmlPath": "data/icdClaML2016ens.xml"
   }
 }

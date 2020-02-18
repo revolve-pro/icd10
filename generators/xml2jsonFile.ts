@@ -2,24 +2,27 @@ import * as fs from "fs";
 import * as path from "path";
 import * as xml2js from "xml2js";
 
-type packagejson = {
+type Config = {
   icd10: {
     xmlPath: string;
   };
 };
 
-const parentPath = path.resolve(process.cwd(), "..", "..");
+const parentPath = process.argv[2] || path.resolve(process.cwd(), "..", "..");
 
 (async () => {
   const packageJson = await readPackageJson();
   const xmlPath = readXmlPathFromParentPackageJson(packageJson);
   const icd10xml = await readXml(xmlPath);
-  const classificationJson = await xml2js.parseStringPromise(icd10xml);
-  saveIcdJson(classificationJson);
-  console.log('Json generated successfully!');
-})();
+  const classificationJson = await parseXml(icd10xml.toString());
+  await saveIcdJson(classificationJson);
+  console.log("Json generated successfully!");
+})().catch(err => {
+  console.error(err);
+  process.exit(1);
+});
 
-async function readPackageJson(): Promise<packagejson> {
+async function readPackageJson(): Promise<Config> {
   const packageJsonPath = path.join(parentPath, "/package.json");
   try {
     return JSON.parse(await fs.promises.readFile(packageJsonPath, "utf8"));
@@ -28,7 +31,7 @@ async function readPackageJson(): Promise<packagejson> {
   }
 }
 
-function readXmlPathFromParentPackageJson(packageJson: packagejson): string {
+function readXmlPathFromParentPackageJson(packageJson: Config): string {
   try {
     if (packageJson.icd10.xmlPath) {
       return packageJson.icd10.xmlPath;
@@ -36,26 +39,34 @@ function readXmlPathFromParentPackageJson(packageJson: packagejson): string {
     throw null;
   } catch (err) {
     throw new Error(
-      "Can't read xml path from package json configuration. Probably missing 'icd10.xmlPath' inside package.json configuration"
+      "Missing 'icd10.xmlPath' inside package.json configuration"
     );
   }
 }
 
-function readXml(xmlPath: string): Promise<Buffer> {
+async function readXml(xmlPath: string): Promise<Buffer> {
   try {
-    return fs.promises.readFile(path.join(parentPath, xmlPath));
+    return await fs.promises.readFile(path.join(parentPath, xmlPath));
   } catch (error) {
     throw new Error(`Can't read xml file. ${xmlPath}`);
   }
 }
 
-function saveIcdJson(classificationJson: any) {
+async function saveIcdJson(classificationJson: any) {
   try {
-    fs.writeFileSync(
+    await fs.promises.writeFile(
       "icdClass.json",
       JSON.stringify(classificationJson, null, 2)
     );
   } catch (error) {
     throw new Error("Can't save icd json file.");
+  }
+}
+
+async function parseXml(xml: string): Promise<string> {
+  try {
+    return await xml2js.parseStringPromise(xml);
+  } catch (error) {
+    throw new Error("Problem with parsing xml");
   }
 }

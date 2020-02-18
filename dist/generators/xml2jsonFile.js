@@ -12,15 +12,18 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const path = require("path");
 const xml2js = require("xml2js");
-const parentPath = path.resolve(process.cwd(), "..", "..");
+const parentPath = process.argv[2] || path.resolve(process.cwd(), "..", "..");
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const packageJson = yield readPackageJson();
     const xmlPath = readXmlPathFromParentPackageJson(packageJson);
     const icd10xml = yield readXml(xmlPath);
-    const classificationJson = yield xml2js.parseStringPromise(icd10xml);
-    saveIcdJson(classificationJson);
-    console.log('Json generated successfully!');
-}))();
+    const classificationJson = yield parseXml(icd10xml.toString());
+    yield saveIcdJson(classificationJson);
+    console.log("Json generated successfully!");
+}))().catch(err => {
+    console.error(err);
+    process.exit(1);
+});
 function readPackageJson() {
     return __awaiter(this, void 0, void 0, function* () {
         const packageJsonPath = path.join(parentPath, "/package.json");
@@ -40,22 +43,36 @@ function readXmlPathFromParentPackageJson(packageJson) {
         throw null;
     }
     catch (err) {
-        throw new Error("Can't read xml path from package json configuration. Probably missing 'icd10.xmlPath' inside package.json configuration");
+        throw new Error("Missing 'icd10.xmlPath' inside package.json configuration");
     }
 }
 function readXml(xmlPath) {
-    try {
-        return fs.promises.readFile(path.join(parentPath, xmlPath));
-    }
-    catch (error) {
-        throw new Error(`Can't read xml file. ${xmlPath}`);
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            return yield fs.promises.readFile(path.join(parentPath, xmlPath));
+        }
+        catch (error) {
+            throw new Error(`Can't read xml file. ${xmlPath}`);
+        }
+    });
 }
 function saveIcdJson(classificationJson) {
-    try {
-        fs.writeFileSync("icdClass.json", JSON.stringify(classificationJson, null, 2));
-    }
-    catch (error) {
-        throw new Error("Can't save icd json file.");
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            yield fs.promises.writeFile("icdClass.json", JSON.stringify(classificationJson, null, 2));
+        }
+        catch (error) {
+            throw new Error("Can't save icd json file.");
+        }
+    });
+}
+function parseXml(xml) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            return yield xml2js.parseStringPromise(xml);
+        }
+        catch (error) {
+            throw new Error("Problem with parsing xml");
+        }
+    });
 }

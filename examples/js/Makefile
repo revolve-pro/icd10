@@ -3,4 +3,3 @@ clear:
 rebuild:
 	make clear
 	npm i
-	node test.js
