@@ -5,10 +5,10 @@ exports.json = json;
 const CATEGORY = "category";
 const BLOCK = "block";
 const CHAPTER = "chapter";
-function find(code) {
+function get(code) {
     return json.ClaML.Class.find((obj) => obj.$.code === code);
 }
-exports.find = find;
+exports.get = get;
 function getCodeList(kind) {
     return json.ClaML.Class.filter((obj) => obj.$.kind === kind).map((obj) => obj.$.code);
 }

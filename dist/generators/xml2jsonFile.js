@@ -14,25 +14,23 @@ const path = require("path");
 const xml2js = require("xml2js");
 const parentPath = path.resolve(process.cwd(), "..", "..");
 (() => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const packageJson = readPackageJson();
-        const xmlPath = readXmlPathFromParentPackageJson(packageJson);
-        const icd10xml = readXml(xmlPath);
-        const classificationJson = yield xml2js.parseStringPromise(icd10xml);
-        saveIcdJson(classificationJson);
-    }
-    catch (error) {
-        console.warn(error.message, "\nPlease load icd10 xml file manually.");
-    }
+    const packageJson = yield readPackageJson();
+    const xmlPath = readXmlPathFromParentPackageJson(packageJson);
+    const icd10xml = yield readXml(xmlPath);
+    const classificationJson = yield xml2js.parseStringPromise(icd10xml);
+    saveIcdJson(classificationJson);
+    console.log('Json generated successfully!');
 }))();
 function readPackageJson() {
-    const packageJsonPath = path.join(parentPath, "/package.json");
-    try {
-        return JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
-    }
-    catch (error) {
-        throw new Error(`Can't read package json. ${packageJsonPath}`);
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        const packageJsonPath = path.join(parentPath, "/package.json");
+        try {
+            return JSON.parse(yield fs.promises.readFile(packageJsonPath, "utf8"));
+        }
+        catch (error) {
+            throw new Error(`Can't read package json. ${packageJsonPath}`);
+        }
+    });
 }
 function readXmlPathFromParentPackageJson(packageJson) {
     try {
@@ -47,7 +45,7 @@ function readXmlPathFromParentPackageJson(packageJson) {
 }
 function readXml(xmlPath) {
     try {
-        return fs.readFileSync(path.join(parentPath, xmlPath));
+        return fs.promises.readFile(path.join(parentPath, xmlPath));
     }
     catch (error) {
         throw new Error(`Can't read xml file. ${xmlPath}`);
