@@ -13,6 +13,6 @@
     "icd10": "github:revolve-pro/icd10#generate_json_on_install"
   },
   "icd10": {
-    "xmlPath": "data/icdClaML2016ens.xml"
+    "xmlPath": "data/icdClaML2016ens.xl"
   }
 }
