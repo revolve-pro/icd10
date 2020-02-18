@@ -4,7 +4,7 @@ const CATEGORY = "category";
 const BLOCK = "block";
 const CHAPTER = "chapter";
 
-function find(code: string) {
+function get(code: string) {
   return json.ClaML.Class.find((obj: any) => obj.$.code === code);
 }
 
@@ -28,7 +28,7 @@ function getCategoryList() {
 
 export {
   json,
-  find,
+  get,
   getChapterList,
   getBlockList,
   getCategoryList
