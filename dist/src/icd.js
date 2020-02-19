@@ -11,8 +11,11 @@ function get(code) {
 }
 exports.get = get;
 function find(searchText) {
-    return json.ClaML.Class.filter((obj) => obj.$.code.includes(searchText) ||
-        obj.Rubric[0].Label[0]._.includes(searchText)).map(xmlObject => toIcdObject(xmlObject));
+    return json.ClaML.Class.filter((obj) => {
+        const icdObject = toIcdObject(obj);
+        return (icdObject.code.toLowerCase().includes(searchText.toLowerCase()) ||
+            icdObject.description.toLowerCase().includes(searchText.toLowerCase()));
+    }).map(xmlObject => toIcdObject(xmlObject));
 }
 exports.find = find;
 function getCodeList(kind) {
@@ -34,7 +37,7 @@ function toIcdObject(xmlObject) {
     return {
         code: xmlObject.$.code,
         type: xmlObject.$.kind,
-        label: xmlObject.Rubric[0].Label[0]._,
+        description: xmlObject.Rubric[0].Label[0]._,
         raw: xmlObject
     };
 }

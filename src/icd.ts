@@ -1,57 +1,60 @@
 const json: {
-  ClaML: { Class: Array<xmlIcdObject> };
+  ClaML: { Class: Array<XmlIcdObject> };
 } = require("../../icdClass.json");
 
 const CATEGORY = "category";
 const BLOCK = "block";
 const CHAPTER = "chapter";
 
-type xmlIcdObject = {
+type XmlIcdObject = {
   $: {
-    code: string;
-    kind: string;
+    code: String;
+    kind: String;
   };
   Rubric: Array<{
     $: {
-      id: string;
-      kind: string;
+      id: String;
+      kind: String;
     };
     Label: Array<{
-      _: string;
+      _: String;
       $: {
-        "xml:lang": string;
-        "xml:space": string;
+        "xml:lang": String;
+        "xml:space": String;
       };
     }>;
   }>;
 };
 
-type ICDObject = {
-  code: string;
-  label: string;
-  type: string;
-  raw: xmlIcdObject;
+type IcdObject = {
+  code: String;
+  description: String;
+  type: String;
+  raw: XmlIcdObject;
 };
 
-function get(code: string): ICDObject | null {
+function get(code: String): IcdObject | null {
   const xmlObject = json.ClaML.Class.find(
-    (obj: xmlIcdObject) => obj.$.code === code
+    (obj: XmlIcdObject) => obj.$.code === code
   );
 
   return xmlObject ? toIcdObject(xmlObject) : null;
 }
 
-function find(searchText: string): Array<ICDObject> {
-  return json.ClaML.Class.filter(
-    (obj: xmlIcdObject) =>
-      obj.$.code.includes(searchText) ||
-      obj.Rubric[0].Label[0]._.includes(searchText)
-  ).map(xmlObject => toIcdObject(xmlObject));
+function find(searchText: String): Array<IcdObject> {
+  return json.ClaML.Class.filter((obj: XmlIcdObject) => {
+    const icdObject = toIcdObject(obj);
+
+    return (
+      icdObject.code.toLowerCase().includes(searchText.toLowerCase()) ||
+      icdObject.description.toLowerCase().includes(searchText.toLowerCase())
+    );
+  }).map(xmlObject => toIcdObject(xmlObject));
 }
 
-function getCodeList(kind: string) {
+function getCodeList(kind: String) {
   return json.ClaML.Class.filter(
-    (obj: xmlIcdObject) => obj.$.kind === kind
+    (obj: XmlIcdObject) => obj.$.kind === kind
   ).map((obj: any) => obj.$.code);
 }
 
@@ -67,11 +70,11 @@ function getCategoryList() {
   return getCodeList(CATEGORY);
 }
 
-function toIcdObject(xmlObject: xmlIcdObject): ICDObject {
+function toIcdObject(xmlObject: XmlIcdObject): IcdObject {
   return {
     code: xmlObject.$.code,
     type: xmlObject.$.kind,
-    label: xmlObject.Rubric[0].Label[0]._,
+    description: xmlObject.Rubric[0].Label[0]._,
     raw: xmlObject
   };
 }

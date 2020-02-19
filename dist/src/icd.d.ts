@@ -1,35 +1,35 @@
 declare const json: {
     ClaML: {
-        Class: Array<xmlIcdObject>;
+        Class: Array<XmlIcdObject>;
     };
 };
-declare type xmlIcdObject = {
+declare type XmlIcdObject = {
     $: {
-        code: string;
-        kind: string;
+        code: String;
+        kind: String;
     };
     Rubric: Array<{
         $: {
-            id: string;
-            kind: string;
+            id: String;
+            kind: String;
         };
         Label: Array<{
-            _: string;
+            _: String;
             $: {
-                "xml:lang": string;
-                "xml:space": string;
+                "xml:lang": String;
+                "xml:space": String;
             };
         }>;
     }>;
 };
-declare type ICDObject = {
-    code: string;
-    label: string;
-    type: string;
-    raw: xmlIcdObject;
+declare type IcdObject = {
+    code: String;
+    description: String;
+    type: String;
+    raw: XmlIcdObject;
 };
-declare function get(code: string): ICDObject | null;
-declare function find(searchText: string): Array<ICDObject>;
+declare function get(code: String): IcdObject | null;
+declare function find(searchText: String): Array<IcdObject>;
 declare function getChapterList(): any[];
 declare function getBlockList(): any[];
 declare function getCategoryList(): any[];
