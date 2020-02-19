@@ -1,7 +1,7 @@
 {
   "name": "icd10",
   "version": "0.0.1",
-  "description": "Package that gole is to gelp working with ICD Classificantion created by WHO",
+  "description": "Package that goal is to help working with ICD Classificantion created by WHO",
   "main": "dist/src/icd.js",
   "types": "dist/src/icd.d.ts",
   "scripts": {
