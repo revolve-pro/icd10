@@ -1,9 +1,10 @@
 # ICD10
 ## Description
-This library main goal is to improve experience of using who icd 10 xml data by delivering a pack of helper methods. Due to licens we do not deliver the data itself, you have to get licence and data from official website https://www.who.int/classifications/help/FAQOther/en/.
+This library main goal is to improve the experience of using WHO Classification of Disease (icd10). The data are delivered as an xml file, and we provide a pack of helper function that make it easier to use this data. Due to license, we do not deliver the data itself, you have to get a licence and data from the official website https://www.who.int/classifications/help/FAQOther/en/.
 
 ## Installation
 In order to install this library you have to add an entry point in your package.json file, it's a relative path to xml you get from WHO.
+
 ##### Assumptions:
 - data are generated from xml you provided
 - data are generated on installation
@@ -40,7 +41,7 @@ icd.getChapterList();
 ```
 #### es6
 ```
-import * as icd10 from "icd10";
+import * as icd from "icd10";
 
 icd.get("A16.9");
 icd.find("disease");
@@ -49,7 +50,7 @@ icd.getChapterList();
 ```
 ## API
 `get` -> parameter is icd code, e.g. 'XII', 'A16.9', return object\
-`find` -> parameter is string, function loog for objects contains this value in description or code\
+`find` -> parameter is string, function look for objects contains this value in description or code\
 `getChapterList` -> return array of strings contained all chapters in classification\
 `getBlockList` -> return array of strings contained all blocks in classification\
 `getCategoryList` -> return array of strings contained all categories in classification
