@@ -6,9 +6,15 @@ const CATEGORY = "category";
 const BLOCK = "block";
 const CHAPTER = "chapter";
 function get(code) {
-    return json.ClaML.Class.find((obj) => obj.$.code === code);
+    const xmlObject = json.ClaML.Class.find((obj) => obj.$.code === code);
+    return xmlObject ? toIcdObject(xmlObject) : null;
 }
 exports.get = get;
+function find(searchText) {
+    return json.ClaML.Class.filter((obj) => obj.$.code.includes(searchText) ||
+        obj.Rubric[0].Label[0]._.includes(searchText)).map(xmlObject => toIcdObject(xmlObject));
+}
+exports.find = find;
 function getCodeList(kind) {
     return json.ClaML.Class.filter((obj) => obj.$.kind === kind).map((obj) => obj.$.code);
 }
@@ -24,3 +30,11 @@ function getCategoryList() {
     return getCodeList(CATEGORY);
 }
 exports.getCategoryList = getCategoryList;
+function toIcdObject(xmlObject) {
+    return {
+        code: xmlObject.$.code,
+        type: xmlObject.$.kind,
+        label: xmlObject.Rubric[0].Label[0]._,
+        raw: xmlObject
+    };
+}
