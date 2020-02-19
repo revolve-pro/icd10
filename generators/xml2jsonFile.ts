@@ -15,8 +15,10 @@ const parentPath = process.argv[2] || path.resolve(process.cwd(), "..", "..");
   const xmlPath = readXmlPathFromParentPackageJson(packageJson);
   const icd10xml = await readXml(xmlPath);
   const classificationJson = await parseXml(icd10xml.toString());
+
   await saveIcdJson(classificationJson);
-  console.log("Json generated successfully!");
+
+  console.info("Json generated successfully!");
 })().catch(err => {
   console.error(err);
   process.exit(1);

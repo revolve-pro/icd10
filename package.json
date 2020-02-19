@@ -7,7 +7,6 @@
   "scripts": {
     "build": "tsc",
     "test": "node ./dist/src/test.js",
-    "generateXSD": "perl generators/dtd2xsd.pl data/icdClaML2016ens/ClaML.dtd >> ClaML.xsd",
     "generateJSON": "node ./dist/generators/xml2jsonFile.js ./",
     "prepublish": "tsc",
     "postinstall": "node ./dist/generators/xml2jsonFile.js"
