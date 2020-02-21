@@ -13,17 +13,24 @@ const fs = require("fs");
 const path = require("path");
 const xml2js = require("xml2js");
 const parentPath = process.argv[2] || path.resolve(process.cwd(), "..", "..");
-(() => __awaiter(void 0, void 0, void 0, function* () {
-    const packageJson = yield readPackageJson();
-    const xmlPath = readXmlPathFromParentPackageJson(packageJson);
-    const icd10xml = yield readXml(xmlPath);
-    const classificationJson = yield parseXml(icd10xml.toString());
-    yield saveIcdJson(classificationJson);
-    console.log("Json generated successfully!");
-}))().catch(err => {
+generate().catch(err => {
     console.error(err);
     process.exit(1);
 });
+function generate() {
+    return __awaiter(this, void 0, void 0, function* () {
+        console.info('generate!!!');
+        const packageJson = yield readPackageJson();
+        const xmlPath = readXmlPathFromParentPackageJson(packageJson);
+        const icd10xml = yield readXml(xmlPath);
+        const classificationJson = yield parseXml(icd10xml.toString());
+        yield saveIcdJson(classificationJson);
+        console.info("Json generated successfully!");
+        console.info("Json generated successfully!");
+        console.info("Json generated successfully!");
+        console.info("Json generated successfully!");
+    });
+}
 function readPackageJson() {
     return __awaiter(this, void 0, void 0, function* () {
         const packageJsonPath = path.join(parentPath, "/package.json");

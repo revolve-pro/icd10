@@ -10,7 +10,14 @@ type Config = {
 
 const parentPath = process.argv[2] || path.resolve(process.cwd(), "..", "..");
 
-(async () => {
+generate().catch(err => {
+  console.error(err);
+  process.exit(1);
+});
+
+async function generate() {
+  console.info('Generating Json from icd10 xml file.');
+
   const packageJson = await readPackageJson();
   const xmlPath = readXmlPathFromParentPackageJson(packageJson);
   const icd10xml = await readXml(xmlPath);
@@ -19,10 +26,7 @@ const parentPath = process.argv[2] || path.resolve(process.cwd(), "..", "..");
   await saveIcdJson(classificationJson);
 
   console.info("Json generated successfully!");
-})().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
+}
 
 async function readPackageJson(): Promise<Config> {
   const packageJsonPath = path.join(parentPath, "/package.json");
