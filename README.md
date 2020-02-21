@@ -6,8 +6,8 @@ This library main goal is to improve the experience of using WHO Classification 
 In order to install this library you have to add an entry point in your package.json file, it's a relative path to xml you get from WHO.
 
 ##### Assumptions:
-- data are generated from xml you provided
-- data are generated on installation
+- data is generated from xml you provided
+- data is generated on installation
 - if generating data fail, installation will fail also
 #### package.json
 
