@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const json = require("../../icdClass.json");
+const path = require("path");
+const json = require(path.join(process.cwd(), "icdClass.json"));
 exports.json = json;
 const CATEGORY = "category";
 const BLOCK = "block";

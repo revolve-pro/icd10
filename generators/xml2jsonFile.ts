@@ -16,7 +16,7 @@ generate().catch(err => {
 });
 
 async function generate() {
-  console.info('Generating Json from icd10 xml file.');
+  console.info("Generating Json from icd10 xml file.");
 
   const packageJson = await readPackageJson();
   const xmlPath = readXmlPathFromParentPackageJson(packageJson);

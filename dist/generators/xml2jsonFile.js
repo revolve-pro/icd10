@@ -19,15 +19,12 @@ generate().catch(err => {
 });
 function generate() {
     return __awaiter(this, void 0, void 0, function* () {
-        console.info('generate!!!');
+        console.info("Generating Json from icd10 xml file.");
         const packageJson = yield readPackageJson();
         const xmlPath = readXmlPathFromParentPackageJson(packageJson);
         const icd10xml = yield readXml(xmlPath);
         const classificationJson = yield parseXml(icd10xml.toString());
         yield saveIcdJson(classificationJson);
-        console.info("Json generated successfully!");
-        console.info("Json generated successfully!");
-        console.info("Json generated successfully!");
         console.info("Json generated successfully!");
     });
 }

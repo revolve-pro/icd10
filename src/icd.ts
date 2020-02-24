@@ -1,6 +1,8 @@
+import * as path from "path";
+
 const json: {
   ClaML: { Class: Array<XmlIcdObject> };
-} = require("../../icdClass.json");
+} = require(path.join(process.cwd(), "icdClass.json"));
 
 const CATEGORY = "category";
 const BLOCK = "block";

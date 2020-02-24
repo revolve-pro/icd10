@@ -1,12 +1,13 @@
 {
-  "name": "icd10",
+  "name": "@revolve/icd10",
   "version": "0.0.1",
   "description": "Package that goal is to help working with ICD Classificantion created by WHO",
   "main": "dist/src/icd.js",
   "types": "dist/src/icd.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "node ./dist/src/test.js",
+    "start": "node ./dist/src/test.js",
+    "test": "jest --coverage",
     "generateJSON": "node ./dist/generators/xml2jsonFile.js ./",
     "prepublish": "tsc",
     "postinstall": "node ./dist/generators/xml2jsonFile.js"
@@ -23,9 +24,25 @@
     "xml2js": "^0.4.23"
   },
   "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/jest": "^25.1.2",
     "@types/node": "^13.7.0",
     "@types/xml2js": "^0.4.5",
+    "babel-jest": "^25.1.0",
+    "jest": "^25.1.0",
     "typescript": "^3.7.5"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist",
+      "<rootDir>/examples",
+      "<rootDir>/src"
+    ],
+    "moduleNameMapper": {
+      "icdClass.json": "<rootDir>/test/__mocks__/icdClass.json"
+    }
   },
   "icd10": {
     "xmlPath": "data/icdClaML2016ens/icdClaML2016ens.xml"
