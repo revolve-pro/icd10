@@ -8,28 +8,25 @@ type Config = {
   };
 };
 
-const parentPath = process.argv[2] || path.resolve(process.cwd(), "..", "..");
-
-generate().catch(err => {
-  console.error(err);
-  process.exit(1);
-});
-
-async function generate() {
+export async function generate() {
   console.info("Generating Json from icd10 xml file.");
 
-  const packageJson = await readPackageJson();
-  const xmlPath = readXmlPathFromParentPackageJson(packageJson);
-  const icd10xml = await readXml(xmlPath);
-  const classificationJson = await parseXml(icd10xml.toString());
+  try {
+    const packageJson = await readPackageJson();
+    const xmlPath = readXmlPathFromParentPackageJson(packageJson);
+    const icd10xml = await readXml(xmlPath);
+    const classificationJson = await parseXml(icd10xml.toString());
 
-  await saveIcdJson(classificationJson);
+    await saveIcdJson(classificationJson);
+  } catch (err) {
+    throw err;
+  }
 
   console.info("Json generated successfully!");
 }
 
 async function readPackageJson(): Promise<Config> {
-  const packageJsonPath = path.join(parentPath, "/package.json");
+  const packageJsonPath = path.join(getPath(), "/package.json");
   try {
     return JSON.parse(await fs.promises.readFile(packageJsonPath, "utf8"));
   } catch (error) {
@@ -52,7 +49,7 @@ function readXmlPathFromParentPackageJson(packageJson: Config): string {
 
 async function readXml(xmlPath: string): Promise<Buffer> {
   try {
-    return await fs.promises.readFile(path.join(parentPath, xmlPath));
+    return await fs.promises.readFile(path.join(getPath(), xmlPath));
   } catch (error) {
     throw new Error(`Can't read xml file. ${xmlPath}`);
   }
@@ -75,4 +72,8 @@ async function parseXml(xml: string): Promise<string> {
   } catch (error) {
     throw new Error("Problem with parsing xml");
   }
+}
+
+function getPath() {
+  return process.argv[2] || path.resolve(process.cwd(), "..", "..");
 }

@@ -8,9 +8,9 @@
     "build": "tsc",
     "start": "node ./dist/src/test.js",
     "test": "jest --coverage",
-    "generateJSON": "node ./dist/generators/xml2jsonFile.js ./",
+    "generateJSON": "node ./dist/generate.js ./",
     "prepublish": "tsc",
-    "postinstall": "node ./dist/generators/xml2jsonFile.js"
+    "postinstall": "node ./dist/generate.js"
   },
   "keywords": [
     "icd",

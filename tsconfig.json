@@ -6,6 +6,5 @@
     "outDir": "./dist",
     "strict": true
   },
-  "include": ["index.ts", "src", "generators"],
-  "exclude": ["examples"]
+  "exclude": ["examples", "test"]
 }

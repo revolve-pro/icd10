@@ -12,25 +12,26 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require("fs");
 const path = require("path");
 const xml2js = require("xml2js");
-const parentPath = process.argv[2] || path.resolve(process.cwd(), "..", "..");
-generate().catch(err => {
-    console.error(err);
-    process.exit(1);
-});
 function generate() {
     return __awaiter(this, void 0, void 0, function* () {
         console.info("Generating Json from icd10 xml file.");
-        const packageJson = yield readPackageJson();
-        const xmlPath = readXmlPathFromParentPackageJson(packageJson);
-        const icd10xml = yield readXml(xmlPath);
-        const classificationJson = yield parseXml(icd10xml.toString());
-        yield saveIcdJson(classificationJson);
+        try {
+            const packageJson = yield readPackageJson();
+            const xmlPath = readXmlPathFromParentPackageJson(packageJson);
+            const icd10xml = yield readXml(xmlPath);
+            const classificationJson = yield parseXml(icd10xml.toString());
+            yield saveIcdJson(classificationJson);
+        }
+        catch (err) {
+            throw err;
+        }
         console.info("Json generated successfully!");
     });
 }
+exports.generate = generate;
 function readPackageJson() {
     return __awaiter(this, void 0, void 0, function* () {
-        const packageJsonPath = path.join(parentPath, "/package.json");
+        const packageJsonPath = path.join(getPath(), "/package.json");
         try {
             return JSON.parse(yield fs.promises.readFile(packageJsonPath, "utf8"));
         }
@@ -53,7 +54,7 @@ function readXmlPathFromParentPackageJson(packageJson) {
 function readXml(xmlPath) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            return yield fs.promises.readFile(path.join(parentPath, xmlPath));
+            return yield fs.promises.readFile(path.join(getPath(), xmlPath));
         }
         catch (error) {
             throw new Error(`Can't read xml file. ${xmlPath}`);
@@ -79,4 +80,7 @@ function parseXml(xml) {
             throw new Error("Problem with parsing xml");
         }
     });
+}
+function getPath() {
+    return process.argv[2] || path.resolve(process.cwd(), "..", "..");
 }
