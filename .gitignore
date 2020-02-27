@@ -1,6 +1,5 @@
 node_modules
-icdClass.json
-ClaML.xsd
+/icdClass.json
 data
-icd10-*.tgz
+*.tgz
 coverage
