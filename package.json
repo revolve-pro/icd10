@@ -9,7 +9,7 @@
     "start": "node ./dist/src/test.js",
     "test": "jest --coverage",
     "generateJSON": "node ./dist/generate.js ./",
-    "prepublish": "tsc",
+    "prepublishOnly": "tsc",
     "postinstall": "node ./dist/generate.js"
   },
   "keywords": [
@@ -21,12 +21,15 @@
   "author": "revolve.pro",
   "license": "MIT",
   "dependencies": {
+    "config": "3.2.5",
     "xml2js": "^0.4.23"
   },
+  "peerDependencies": {},
   "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-typescript": "^7.8.3",
+    "@types/config": "0.0.36",
     "@types/jest": "^25.1.2",
     "@types/node": "^13.7.0",
     "@types/xml2js": "^0.4.5",
@@ -43,8 +46,5 @@
     "moduleNameMapper": {
       "icdClass.json": "<rootDir>/test/__mocks__/icdClass.json"
     }
-  },
-  "icd10": {
-    "xmlPath": "data/icdClaML2016ens/icdClaML2016ens.xml"
   }
 }

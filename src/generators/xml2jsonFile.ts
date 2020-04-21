@@ -1,55 +1,25 @@
 import * as fs from "fs";
 import * as path from "path";
 import * as xml2js from "xml2js";
+import { get } from "config";
 
 type Config = {
-  icd10: {
-    xmlPath: string;
-  };
+  xmlPath: string;
 };
 
+const config = get<Config>("icd10");
+
 export async function generate() {
-  console.info("Generating Json from icd10 xml file.");
+  // throw new Error('ggg'+JSON.stringify(config))
+  const icd10xml = await readXml(config.xmlPath);
+  const classificationJson = await parseXml(icd10xml.toString());
 
-  try {
-    const packageJson = await readPackageJson();
-    const xmlPath = readXmlPathFromParentPackageJson(packageJson);
-    const icd10xml = await readXml(xmlPath);
-    const classificationJson = await parseXml(icd10xml.toString());
-
-    await saveIcdJson(classificationJson);
-  } catch (err) {
-    throw err;
-  }
-
-  console.info("Json generated successfully!");
-}
-
-async function readPackageJson(): Promise<Config> {
-  const packageJsonPath = path.join(getPath(), "/package.json");
-  try {
-    return JSON.parse(await fs.promises.readFile(packageJsonPath, "utf8"));
-  } catch (error) {
-    throw new Error(`Can't read package json. ${packageJsonPath}`);
-  }
-}
-
-function readXmlPathFromParentPackageJson(packageJson: Config): string {
-  try {
-    if (packageJson.icd10.xmlPath) {
-      return packageJson.icd10.xmlPath;
-    }
-    throw null;
-  } catch (err) {
-    throw new Error(
-      "Missing 'icd10.xmlPath' inside package.json configuration"
-    );
-  }
+  await saveIcdJson(classificationJson);
 }
 
 async function readXml(xmlPath: string): Promise<Buffer> {
   try {
-    return await fs.promises.readFile(path.join(getPath(), xmlPath));
+    return await fs.promises.readFile(path.resolve(xmlPath));
   } catch (error) {
     throw new Error(`Can't read xml file. ${xmlPath}`);
   }
@@ -59,7 +29,7 @@ async function saveIcdJson(classificationJson: any) {
   try {
     await fs.promises.writeFile(
       "icdClass.json",
-      JSON.stringify(classificationJson, null, 2)
+      JSON.stringify(classificationJson)
     );
   } catch (error) {
     throw new Error("Can't save icd json file.");
@@ -74,6 +44,9 @@ async function parseXml(xml: string): Promise<string> {
   }
 }
 
-function getPath() {
-  return process.argv[2] || path.resolve(process.cwd(), "..", "..");
-}
+generate()
+  .then(() => console.info("Json generated successfully!"))
+  .catch(err => {
+    console.error(err);
+    process.exit(1);
+  });
