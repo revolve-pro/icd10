@@ -8,9 +8,8 @@
     "build": "tsc",
     "start": "node ./dist/src/test.js",
     "test": "jest --coverage",
-    "generateJSON": "node ./dist/generate.js ./",
-    "prepublishOnly": "tsc",
-    "postinstall": "node ./dist/generate.js"
+    "prepublishOnly": "npm run build",
+    "postinstall": "node scripts/generate.js"
   },
   "keywords": [
     "icd",
