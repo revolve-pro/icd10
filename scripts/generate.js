@@ -1,16 +1,9 @@
-const { readFileSync } = require("fs");
-const path = require("path");
+let xml2jsonFile = { generate: () => {} };
 
-const { name } = JSON.parse(readFileSync("./package.json", "utf8"));
-const isNotUs = name !== "@revolve/icd10";
+try {
+  xml2jsonFile = require("../dist/generators/xml2jsonFile.js");
+} catch (error) {}
 
-const isNotInModules =
-  __dirname.split(path.sep).slice(-3).join("") !==
-  ["node_modules", "@revolve", "icd10"].join("");
+const { generate } = xml2jsonFile;
 
-if (isNotUs && isNotInModules) {
-  const { generate } = require("../dist/generators/xml2jsonFile.js");
-  generate();
-} else {
-  console.error("Not generating in parent");
-}
+generate();
