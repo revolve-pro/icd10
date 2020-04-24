@@ -1,15 +1,10 @@
-let icd10 = { generate: Promise.resolve() };
-
-const p = String.raw`C:\repo\schedule\log.json`;
 const path = require("path");
-const fs = require("fs");
 
-fs.appendFileSync(p, __dirname + "\n");
-fs.appendFileSync(p, __dirname.split(path.sep).reverse()[1] + "\n");
+let icd10 = { generate: () => Promise.resolve() };
+const isDependency = __dirname.split(path.sep).reverse()[3] === "node_modules";
 
-const isDependency = __dirname.split(path.sep).reverse()[1] === "node_modules";
 if (isDependency) {
-  process.chdir(path.dirname(path.dirname(__dirname)));
+  process.chdir(path.resolve(__dirname, "..", "..", "..", ".."));
 }
 
 try {

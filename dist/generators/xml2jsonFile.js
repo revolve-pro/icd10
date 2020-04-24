@@ -16,7 +16,6 @@ const config_1 = require("config");
 const config = config_1.get("icd10");
 function generate() {
     return __awaiter(this, void 0, void 0, function* () {
-        // throw new Error('ggg'+JSON.stringify(config))
         const icd10xml = yield readXml(config.xmlPath);
         const classificationJson = yield parseXml(icd10xml.toString());
         yield saveIcdJson(classificationJson);
@@ -53,9 +52,3 @@ function parseXml(xml) {
         }
     });
 }
-generate()
-    .then(() => console.info("Json generated successfully!"))
-    .catch(err => {
-    console.error(err);
-    process.exit(1);
-});

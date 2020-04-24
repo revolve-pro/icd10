@@ -1,3 +1,4 @@
+import { generate } from "./generators/xml2jsonFile";
 declare const json: {
     ClaML: {
         Class: Array<XmlIcdObject>;
@@ -33,4 +34,4 @@ declare function find(searchText: String): Array<IcdObject>;
 declare function getChapterList(): any[];
 declare function getBlockList(): any[];
 declare function getCategoryList(): any[];
-export { json, get, find, getChapterList, getBlockList, getCategoryList };
+export { json, get, find, getChapterList, getBlockList, getCategoryList, generate, };

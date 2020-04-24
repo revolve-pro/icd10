@@ -9,11 +9,10 @@ In order to install this library you have to add an entry point in your package.
 - data is generated from xml you provided
 - data is generated on installation
 - if generating data fail, installation will fail also
-#### package.json
+#### config/default.json
 
 ```
 {
-  name: "..."
   ...
   "icd10": {
     "xmlPath": "relative_path_to_your_xml_file"

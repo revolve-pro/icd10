@@ -4,3 +4,4 @@ data
 *.tgz
 coverage
 config/local.js
+.npmrc

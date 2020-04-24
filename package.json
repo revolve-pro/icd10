@@ -2,11 +2,11 @@
   "name": "@revolve/icd10",
   "version": "0.0.1",
   "description": "Package that goal is to help working with ICD Classificantion created by WHO",
-  "main": "dist/src/icd.js",
-  "types": "dist/src/icd.d.ts",
+  "main": "dist/icd.js",
+  "types": "dist/icd.d.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node ./dist/src/test.js",
+    "start": "node ./dist/test.js",
     "test": "jest --coverage",
     "prepublishOnly": "npm run build",
     "postinstall": "node scripts/generate.js"
