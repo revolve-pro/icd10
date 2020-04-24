@@ -10,7 +10,6 @@ type Config = {
 const config = get<Config>("icd10");
 
 export async function generate() {
-  // throw new Error('ggg'+JSON.stringify(config))
   const icd10xml = await readXml(config.xmlPath);
   const classificationJson = await parseXml(icd10xml.toString());
 
@@ -43,10 +42,3 @@ async function parseXml(xml: string): Promise<string> {
     throw new Error("Problem with parsing xml");
   }
 }
-
-generate()
-  .then(() => console.info("Json generated successfully!"))
-  .catch(err => {
-    console.error(err);
-    process.exit(1);
-  });

@@ -1,8 +1,12 @@
+import { existsSync } from "fs";
 import * as path from "path";
 
+import { generate } from "./generators/xml2jsonFile";
+
+const jsonPath = path.join(process.cwd(), "icdClass.json");
 const json: {
   ClaML: { Class: Array<XmlIcdObject> };
-} = require(path.join(process.cwd(), "icdClass.json"));
+} = existsSync(jsonPath) ? require(jsonPath) : {};
 
 const CATEGORY = "category";
 const BLOCK = "block";
@@ -51,7 +55,7 @@ function find(searchText: String): Array<IcdObject> {
       icdObject.code.toLowerCase().includes(searchText.toLowerCase()) ||
       icdObject.description.toLowerCase().includes(searchText.toLowerCase())
     );
-  }).map(xmlObject => toIcdObject(xmlObject));
+  }).map((xmlObject) => toIcdObject(xmlObject));
 }
 
 function getCodeList(kind: String) {
@@ -77,8 +81,16 @@ function toIcdObject(xmlObject: XmlIcdObject): IcdObject {
     code: xmlObject.$.code,
     type: xmlObject.$.kind,
     description: xmlObject.Rubric[0].Label[0]._,
-    raw: xmlObject
+    raw: xmlObject,
   };
 }
 
-export { json, get, find, getChapterList, getBlockList, getCategoryList };
+export {
+  json,
+  get,
+  find,
+  getChapterList,
+  getBlockList,
+  getCategoryList,
+  generate,
+};
