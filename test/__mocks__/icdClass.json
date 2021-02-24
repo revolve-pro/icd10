@@ -1,0 +1,75 @@
+{
+  "ClaML": {
+    "Class": [
+      {
+        "$": {
+          "code": "I",
+          "kind": "chapter"
+        },
+        "Rubric": [
+          {
+            "$": {
+              "id": "D0000001",
+              "kind": "preferred"
+            },
+            "Label": [
+              {
+                "_": "Certain infectious and parasitic diseases",
+                "$": {
+                  "xml:lang": "en",
+                  "xml:space": "default"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "$": {
+          "code": "A00-A09",
+          "kind": "block"
+        },
+        "Rubric": [
+          {
+            "$": {
+              "id": "D0000002",
+              "kind": "preferred"
+            },
+            "Label": [
+              {
+                "_": "Intestinal infectious diseases",
+                "$": {
+                  "xml:lang": "en",
+                  "xml:space": "default"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "$": {
+          "code": "A00.1",
+          "kind": "category"
+        },
+        "Rubric": [
+          {
+            "$": {
+              "id": "D0000005",
+              "kind": "preferred"
+            },
+            "Label": [
+              {
+                "_": "Cholera due to Vibrio cholerae 01, biovar eltor",
+                "$": {
+                  "xml:lang": "en",
+                  "xml:space": "default"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

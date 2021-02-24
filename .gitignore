@@ -1,0 +1,7 @@
+node_modules
+/icdClass.json
+data
+*.tgz
+coverage
+config/local.js
+.npmrc

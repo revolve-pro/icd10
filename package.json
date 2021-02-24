@@ -1,8 +1,15 @@
 {
-  "name": "icd10",
+  "name": "@revolve/icd10",
   "version": "0.0.1",
-  "description": "Package that gole is to gelp working with ICD Classificantion created by WHO",
+  "description": "Package that goal is to help working with ICD Classificantion created by WHO",
+  "main": "dist/icd.js",
+  "types": "dist/icd.d.ts",
   "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/test.js",
+    "test": "jest --coverage",
+    "prepublishOnly": "npm run build",
+    "postinstall": "node scripts/generate.js"
   },
   "keywords": [
     "icd",
@@ -12,4 +19,31 @@
   ],
   "author": "revolve.pro",
   "license": "MIT",
+  "dependencies": {
+    "config": "3.2.5",
+    "xml2js": "^0.4.23"
+  },
+  "peerDependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/config": "0.0.36",
+    "@types/jest": "^25.1.2",
+    "@types/node": "^13.7.0",
+    "@types/xml2js": "^0.4.5",
+    "babel-jest": "^25.1.0",
+    "jest": "^25.1.0",
+    "typescript": "^3.7.5"
+  },
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "<rootDir>/dist",
+      "<rootDir>/examples",
+      "<rootDir>/src"
+    ],
+    "moduleNameMapper": {
+      "icdClass.json": "<rootDir>/test/__mocks__/icdClass.json"
+    }
+  }
 }
